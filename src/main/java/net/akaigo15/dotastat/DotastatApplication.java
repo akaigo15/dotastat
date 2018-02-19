@@ -1,5 +1,6 @@
 package net.akaigo15.dotastat;
 
+import net.akaigo15.dotastat.opendota.cache.DotaCacheConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,4 +17,7 @@ public class DotastatApplication {
 	RestTemplate createRestTemplate() {
 		return new RestTemplate();
 	}
+
+	@Bean
+	DotaCacheConfig createCacheConfig() {return new DotaCacheConfig(10*60);}
 }
