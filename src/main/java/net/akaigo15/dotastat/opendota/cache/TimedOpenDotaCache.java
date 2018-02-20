@@ -3,6 +3,8 @@ package net.akaigo15.dotastat.opendota.cache;
 import net.akaigo15.dotastat.opendota.PlayerHeroInfo;
 import net.akaigo15.dotastat.opendota.TeamHeroInfo;
 import net.akaigo15.dotastat.opendota.TeamMatchInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +13,11 @@ import java.util.*;
 
 @Component
 public class TimedOpenDotaCache implements OpenDotaCache {
+  private static final Logger LOG = LoggerFactory.getLogger(TimedOpenDotaCache.class);
 
   private DotaCacheConfig config;
   private Map<Integer, TimedCachedObject<PlayerHeroInfo>> playerHeroInfoMap;
+  private Map<IdandPatchKey, TimedCachedObject<PlayerHeroInfo>> playerHeroInfoPatchMap;
   private Map<Integer, TimedCachedObject<TeamHeroInfo>> teamHeroInfoMap;
   private Map<Integer, TimedCachedObject<TeamMatchInfo>> teamMatchInfoMap;
 
@@ -32,8 +36,8 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   }
 
   @Override
-  public void addPlayerHeroInfo(List<PlayerHeroInfo> playerHeroInfoList, int steam32Id, int patch) {
-    
+  public void addPlayerHeroPatchInfo(List<PlayerHeroInfo> playerHeroInfoList, int steam32Id, int patch) {
+    playerHeroInfoPatchMap.put(new IdandPatchKey(steam32Id, patch), new TimedCachedObject<>(playerHeroInfoList));
   }
 
   @Override
@@ -62,7 +66,17 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   }
 
   @Override
-  public Optional<List<PlayerHeroInfo>> getPlayerHeroInfo(int steam32Id, int patch) {
+  public Optional<List<PlayerHeroInfo>> getPlayerHeroPatchInfo(int steam32Id, int patch) {
+    TimedCachedObject<PlayerHeroInfo> cachedObject = playerHeroInfoPatchMap.get(new IdandPatchKey(steam32Id, patch));
+
+    if(cachedObject == null) {
+      return Optional.empty();
+    }
+
+    if(timeCheck(cachedObject.getTimeSubmitted())) {
+      return Optional.of(cachedObject.getCashedData());
+    }
+
     return Optional.empty();
   }
 
