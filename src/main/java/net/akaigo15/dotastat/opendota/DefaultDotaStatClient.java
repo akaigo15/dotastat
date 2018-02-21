@@ -32,17 +32,19 @@ public class DefaultDotaStatClient implements DotaStatClient {
   @Override
   public List<PlayerHeroInfo> getHeroInfoList(int steam32Id, int patch) {
 
+    Optional<List<PlayerHeroInfo>> optionalList = openDotaCache.getPlayerHeroPatchInfo(steam32Id, patch);
 
-    String patchUrl = "?patch="+patch;
+    if(!optionalList.isPresent()) {
+      String patchUrl = "?patch=" + patch;
+      String url = String.format(URL_HEROES_FOR_PLAYER,steam32Id);
+      url = url+patchUrl;
+      PlayerHeroInfo[] infoArray = restTemplate.getForObject(url, PlayerHeroInfo[].class);
+      List<PlayerHeroInfo> info = Arrays.asList(infoArray);
+      LOG.debug("Call to OpenDota URL: {} returned {} items", url, info.size());
 
-    String url = String.format(URL_HEROES_FOR_PLAYER,steam32Id);
-    url = url+patchUrl;
-
-    PlayerHeroInfo[] infoArray = restTemplate.getForObject(url, PlayerHeroInfo[].class);
-    List<PlayerHeroInfo> info = Arrays.asList(infoArray);
-    LOG.debug("Call to OpenDota URL: {} returned {} items", url, info.size());
-
-    return info;
+      return info;
+    }
+    return optionalList.get();
   }
   
   @Override

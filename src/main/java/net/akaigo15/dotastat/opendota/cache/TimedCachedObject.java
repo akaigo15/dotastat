@@ -7,12 +7,12 @@ import java.util.List;
 
 public class TimedCachedObject<T> {
   private Date timeSubmitted;
-  private List<T> cashedData;
+  private List<T> cachedData;
 
   public TimedCachedObject(List<T> list) {
     timeSubmitted = Date.from(Instant.now());
-    cashedData = new ArrayList<>();
-    cashedData.addAll(list);
+    cachedData = new ArrayList<>();
+    cachedData.addAll(list);
   }
 
   public Date getTimeSubmitted() {
@@ -20,6 +20,6 @@ public class TimedCachedObject<T> {
   }
 
   public List<T> getCashedData() {
-    return cashedData;
+    return cachedData;
   }
 }

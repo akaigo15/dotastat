@@ -2,7 +2,7 @@ package net.akaigo15.dotastat.opendota;
 
 public class PlayerHeroInfo {
 
-  private String hero_id;
+  private int hero_id;
   private int last_played;
   private int games;
   private int win;
@@ -11,11 +11,11 @@ public class PlayerHeroInfo {
   private int against_games;
   private int against_win;
 
-  public String getHero_id() {
+  public int getHero_id() {
     return hero_id;
   }
 
-  public void setHero_id(String hero_id) {
+  public void setHero_id(int hero_id) {
     this.hero_id = hero_id;
   }
 

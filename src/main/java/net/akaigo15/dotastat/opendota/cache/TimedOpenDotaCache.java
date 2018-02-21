@@ -26,6 +26,7 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   public TimedOpenDotaCache(DotaCacheConfig config) {
     this.config = config;
     playerHeroInfoMap = new HashMap<>();
+    playerHeroInfoPatchMap = new HashMap<>();
     teamHeroInfoMap = new HashMap<>();
     teamMatchInfoMap = new HashMap<>();
   }
@@ -33,21 +34,25 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   @Override
   public void addPlayerHeroInfo(List<PlayerHeroInfo> playerHeroInfoList, int steam32Id) {
     playerHeroInfoMap.put(steam32Id, new TimedCachedObject<>(playerHeroInfoList));
+    LOG.debug("Put steam user: " + steam32Id + " playerHeroInfoList into playerHeroInfoMap");
   }
 
   @Override
   public void addPlayerHeroPatchInfo(List<PlayerHeroInfo> playerHeroInfoList, int steam32Id, int patch) {
     playerHeroInfoPatchMap.put(new IdandPatchKey(steam32Id, patch), new TimedCachedObject<>(playerHeroInfoList));
+    LOG.debug("Put steam user: " + steam32Id + " playerHeroInfoList and patch : " + patch + " into playerHeroPatchInfoMap");
   }
 
   @Override
   public void addTeamHeroInfo(List<TeamHeroInfo> teamHeroInfoList, int teamId) {
     teamHeroInfoMap.put(teamId, new TimedCachedObject<>(teamHeroInfoList));
+    LOG.debug("Put team: " + teamId + " teamHeroInfoList into teamHeroInfoMap");
   }
 
   @Override
   public void addTeamMatchInfo(List<TeamMatchInfo> teamMatchInfoList, int teamId) {
     teamMatchInfoMap.put(teamId, new TimedCachedObject<>(teamMatchInfoList));
+    LOG.debug("Put team: " + teamId + " teamMatchInfoList into teamMatchInfoMap");
   }
 
   @Override
@@ -55,13 +60,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<PlayerHeroInfo> cachedObject = playerHeroInfoMap.get(steam32Id);
 
     if(cachedObject == null) {
+      LOG.debug("Steam user: " + steam32Id + " Was not found in playerHeroInfoMap.");
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
+      LOG.debug("Steam user: " + steam32Id + "Was found in playerHeroInfoMap and up to date.");
       return Optional.of(cachedObject.getCashedData());
     }
 
+    LOG.debug("Steam user: " + steam32Id + " Was found in playerHeroInfoMap. Cache timed out.");
     return Optional.empty();
   }
 
@@ -70,13 +78,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<PlayerHeroInfo> cachedObject = playerHeroInfoPatchMap.get(new IdandPatchKey(steam32Id, patch));
 
     if(cachedObject == null) {
+      LOG.debug("Steam user: " + steam32Id + " with patch: " + patch + " Was not found in playerHeroPatchInfoMap.");
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
+      LOG.debug("Steam user: " + steam32Id + "with patch: " + patch + " Was found in playerHeroPatchInfoMap and is up to date.");
       return Optional.of(cachedObject.getCashedData());
     }
 
+    LOG.debug("Steam user: " + steam32Id + "with patch: " + patch + " Was found in playerHeroPatchInfoMap. Cache timed out.");
     return Optional.empty();
   }
 
@@ -85,13 +96,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<TeamHeroInfo> cachedObject = teamHeroInfoMap.get(teamId);
 
     if(cachedObject == null) {
+      LOG.debug("Team: " + teamId + " Was not found in TeamHeroInfoMap.");
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
+      LOG.debug("Team: " + teamId + " Was found in TeamHeroInfoMap and is up to date.");
       return Optional.of(cachedObject.getCashedData());
     }
 
+    LOG.debug("Team: " + teamId + " Was found in TeamHeroInfoMap. Cache timed out.");
     return Optional.empty();
   }
 
@@ -100,13 +114,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<TeamMatchInfo> cachedObject = teamMatchInfoMap.get(teamId);
 
     if(cachedObject == null) {
+      LOG.debug("Team: " + teamId + " Was not found in TeamMatchInfoMap.");
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
+      LOG.debug("Team: " + teamId + " Was found in TeamMatchInfoMap and is up to date.");
       return Optional.of(cachedObject.getCashedData());
     }
 
+    LOG.debug("Team: " + teamId + " Was found in TeamMatchInfoMap. Cache timed out.");
     return Optional.empty();
   }
 
