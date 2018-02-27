@@ -3,6 +3,7 @@ package net.akaigo15.dotastat;
 import net.akaigo15.dotastat.opendota.cache.DotaCacheConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,7 +11,8 @@ import org.springframework.web.client.RestTemplate;
 public class DotastatApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DotastatApplication.class, args);
+		new SpringApplicationBuilder(DotastatApplication.class)
+				.run();
 	}
 
 	@Bean

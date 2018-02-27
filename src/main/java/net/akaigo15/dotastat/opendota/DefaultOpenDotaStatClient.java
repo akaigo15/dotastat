@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DefaultDotaStatClient implements DotaStatClient {
-  private static final Logger LOG = LoggerFactory.getLogger(DefaultDotaStatClient.class);
+public class DefaultOpenDotaStatClient implements OpenDotaStatClient {
+  private static final Logger LOG = LoggerFactory.getLogger(DefaultOpenDotaStatClient.class);
 
   private static final String URL_HEROES_FOR_PLAYER = "https://api.opendota.com/api/players/%s/heroes";
   private static final String ULR_HEROES_FOR_TEAM = " https://api.opendota.com/api/teams/%s/heroes";
@@ -24,7 +24,7 @@ public class DefaultDotaStatClient implements DotaStatClient {
 
 
   @Autowired
-  public DefaultDotaStatClient(RestTemplate restTemplate, OpenDotaCache openDotaCache) {
+  public DefaultOpenDotaStatClient(RestTemplate restTemplate, OpenDotaCache openDotaCache) {
     this.restTemplate = restTemplate;
     this.openDotaCache = openDotaCache;
   }

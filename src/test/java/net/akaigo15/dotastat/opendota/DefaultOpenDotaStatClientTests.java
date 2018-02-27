@@ -1,6 +1,5 @@
 package net.akaigo15.dotastat.opendota;
 
-import net.akaigo15.dotastat.UnitTestHelper;
 import net.akaigo15.dotastat.opendota.cache.OpenDotaCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,14 +20,14 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultDotaStatClientTests {
+public class DefaultOpenDotaStatClientTests {
 
   @Mock RestTemplate restTemplate;
   @Mock OpenDotaCache openDotaCache;
 
   @InjectMocks
   @Spy
-  DefaultDotaStatClient defaultDotaStatClient;
+  DefaultOpenDotaStatClient defaultDotaStatClient;
 
   @Captor private ArgumentCaptor<Integer> integerCaptor1;
   @Captor private ArgumentCaptor<Integer> integerCaptor2;
