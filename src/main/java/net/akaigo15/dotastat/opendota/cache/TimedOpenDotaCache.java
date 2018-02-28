@@ -32,31 +32,31 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   }
 
   @Override
-  public void addPlayerHeroInfo(List<PlayerHeroInfo> playerHeroInfoList, int steam32Id) {
+  public void addPlayerHeroInfo(final List<PlayerHeroInfo> playerHeroInfoList, final int steam32Id) {
     playerHeroInfoMap.put(steam32Id, new TimedCachedObject<>(playerHeroInfoList));
     LOG.debug("Put steam user: " + steam32Id + " playerHeroInfoList into playerHeroInfoMap");
   }
 
   @Override
-  public void addPlayerHeroPatchInfo(List<PlayerHeroInfo> playerHeroInfoList, int steam32Id, int patch) {
+  public void addPlayerHeroPatchInfo(final List<PlayerHeroInfo> playerHeroInfoList, final int steam32Id, final int patch) {
     playerHeroInfoPatchMap.put(new IdandPatchKey(steam32Id, patch), new TimedCachedObject<>(playerHeroInfoList));
     LOG.debug("Put steam user: " + steam32Id + " playerHeroInfoList and patch : " + patch + " into playerHeroPatchInfoMap");
   }
 
   @Override
-  public void addTeamHeroInfo(List<TeamHeroInfo> teamHeroInfoList, int teamId) {
+  public void addTeamHeroInfo(final List<TeamHeroInfo> teamHeroInfoList, final int teamId) {
     teamHeroInfoMap.put(teamId, new TimedCachedObject<>(teamHeroInfoList));
     LOG.debug("Put team: " + teamId + " teamHeroInfoList into teamHeroInfoMap");
   }
 
   @Override
-  public void addTeamMatchInfo(List<TeamMatchInfo> teamMatchInfoList, int teamId) {
+  public void addTeamMatchInfo(final List<TeamMatchInfo> teamMatchInfoList, final int teamId) {
     teamMatchInfoMap.put(teamId, new TimedCachedObject<>(teamMatchInfoList));
     LOG.debug("Put team: " + teamId + " teamMatchInfoList into teamMatchInfoMap");
   }
 
   @Override
-  public Optional<List<PlayerHeroInfo>> getPlayerHeroInfo(int steam32Id) {
+  public Optional<List<PlayerHeroInfo>> getPlayerHeroInfo(final int steam32Id) {
     TimedCachedObject<PlayerHeroInfo> cachedObject = playerHeroInfoMap.get(steam32Id);
 
     if(cachedObject == null) {
@@ -74,7 +74,7 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   }
 
   @Override
-  public Optional<List<PlayerHeroInfo>> getPlayerHeroPatchInfo(int steam32Id, int patch) {
+  public Optional<List<PlayerHeroInfo>> getPlayerHeroPatchInfo(final int steam32Id, final int patch) {
     TimedCachedObject<PlayerHeroInfo> cachedObject = playerHeroInfoPatchMap.get(new IdandPatchKey(steam32Id, patch));
 
     if(cachedObject == null) {
@@ -92,7 +92,7 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   }
 
   @Override
-  public Optional<List<TeamHeroInfo>> getTeamHeroInfo(int teamId) {
+  public Optional<List<TeamHeroInfo>> getTeamHeroInfo(final int teamId) {
     TimedCachedObject<TeamHeroInfo> cachedObject = teamHeroInfoMap.get(teamId);
 
     if(cachedObject == null) {
@@ -110,7 +110,7 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   }
 
   @Override
-  public Optional<List<TeamMatchInfo>> getTeamMatchInfo(int teamId) {
+  public Optional<List<TeamMatchInfo>> getTeamMatchInfo(final int teamId) {
     TimedCachedObject<TeamMatchInfo> cachedObject = teamMatchInfoMap.get(teamId);
 
     if(cachedObject == null) {

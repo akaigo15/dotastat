@@ -28,12 +28,12 @@ public class FileBasedHeroData implements HeroData {
   }
 
   @Override
-  public Hero getHero(int heroId) {
+  public Hero getHero(final int heroId) {
     return null;
   }
 
   @Override
-  public String getHeroName(int heroId) {
+  public String getHeroName(final int heroId) {
     return null;
   }
 

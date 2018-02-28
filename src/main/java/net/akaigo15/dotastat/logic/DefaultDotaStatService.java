@@ -30,7 +30,7 @@ public class DefaultDotaStatService implements DotaStatService {
   }
 
   @Override
-  public List<PlayerHeroStats> filterPlayerHeroInfo(int steam32Id, Integer patch, List<Hero.Role> heroType, int minimumGamesPlayed, double minimumWinRate) {
+  public List<PlayerHeroStats> filterPlayerHeroInfo(final int steam32Id, final Integer patch, final List<Hero.Role> heroType, final int minimumGamesPlayed, final double minimumWinRate) {
     List<PlayerHeroInfo> rawList;
 
     if(patch == null) {
@@ -59,7 +59,7 @@ public class DefaultDotaStatService implements DotaStatService {
   }
 
   @Override
-  public List<TeamHeroStats> filterTeamHeroInfo(int teamId, List<Hero.Role> heroType, int minimumGamesPlayed, double minimumWinRate) {
+  public List<TeamHeroStats> filterTeamHeroInfo(final int teamId, final List<Hero.Role> heroType, final int minimumGamesPlayed, final double minimumWinRate) {
     List<TeamHeroInfo> rawList = openDotaStatClient.getTeamHeroInfoList(teamId);
 
     if (heroType == null || heroType.size() == 0) {
@@ -79,7 +79,7 @@ public class DefaultDotaStatService implements DotaStatService {
   }
 
   @Override
-  public List<TeamMatchInfo> filterTeamMatchInfo(int teamId, Integer leagueId, boolean win) {
+  public List<TeamMatchInfo> filterTeamMatchInfo(final int teamId, final Integer leagueId, final boolean win) {
     List<TeamMatchInfo> rawList = openDotaStatClient.getTeamMatchInfoList(teamId);
 
     if(leagueId == null) {
@@ -95,11 +95,11 @@ public class DefaultDotaStatService implements DotaStatService {
 
   }
 
-  private List<Hero.Role> getHeroType(int id) {
+  private List<Hero.Role> getHeroType(final int id) {
     return heroData.getHero(id).getRole();
   }
 
-  private boolean winningTeam(int teamId, int radiantId, int direId, boolean radiantWin) {
+  private boolean winningTeam(final int teamId, final int radiantId, final int direId, final boolean radiantWin) {
     if(teamId == radiantId && radiantWin) {
       return true;
     }
@@ -110,7 +110,7 @@ public class DefaultDotaStatService implements DotaStatService {
     return false;
   }
 
-  private boolean hasRole(List<Hero.Role> requiredRoleList, List<Hero.Role> heroRoleList) {
+  private boolean hasRole(final List<Hero.Role> requiredRoleList, final List<Hero.Role> heroRoleList) {
     for(Hero.Role r : requiredRoleList) {
       if(heroRoleList.contains(r)) {
         return true;

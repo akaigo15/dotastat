@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OpenDotaCache {
-  void addPlayerHeroInfo(List<PlayerHeroInfo> playerHeroInfoList, int steam32Id);
-  void addPlayerHeroPatchInfo(List<PlayerHeroInfo> playerHeroInfoList, int steam32Id, int patch);
-  void addTeamHeroInfo(List<TeamHeroInfo> teamHeroInfoList, int teamId);
-  void addTeamMatchInfo(List<TeamMatchInfo> teamMatchInfoList, int teamId);
+  void addPlayerHeroInfo(final List<PlayerHeroInfo> playerHeroInfoList, final int steam32Id);
+  void addPlayerHeroPatchInfo(final List<PlayerHeroInfo> playerHeroInfoList, final int steam32Id, int patch);
+  void addTeamHeroInfo(final List<TeamHeroInfo> teamHeroInfoList, final int teamId);
+  void addTeamMatchInfo(final List<TeamMatchInfo> teamMatchInfoList, final int teamId);
 
-  Optional<List<PlayerHeroInfo>> getPlayerHeroInfo(int steam32Id);
-  Optional<List<PlayerHeroInfo>> getPlayerHeroPatchInfo(int steam32Id, int patch);
-  Optional<List<TeamHeroInfo>> getTeamHeroInfo(int teamId);
-  Optional<List<TeamMatchInfo>> getTeamMatchInfo(int teamId);
+  Optional<List<PlayerHeroInfo>> getPlayerHeroInfo(final int steam32Id);
+  Optional<List<PlayerHeroInfo>> getPlayerHeroPatchInfo(final int steam32Id, final int patch);
+  Optional<List<TeamHeroInfo>> getTeamHeroInfo(final int teamId);
+  Optional<List<TeamMatchInfo>> getTeamMatchInfo(final int teamId);
 }

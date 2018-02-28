@@ -30,7 +30,7 @@ public class DefaultOpenDotaStatClient implements OpenDotaStatClient {
   }
 
   @Override
-  public List<PlayerHeroInfo> getHeroInfoList(int steam32Id, int patch) {
+  public List<PlayerHeroInfo> getHeroInfoList(final int steam32Id, final int patch) {
 
     Optional<List<PlayerHeroInfo>> optionalList = openDotaCache.getPlayerHeroPatchInfo(steam32Id, patch);
 
@@ -48,7 +48,7 @@ public class DefaultOpenDotaStatClient implements OpenDotaStatClient {
   }
   
   @Override
-  public List<PlayerHeroInfo> getHeroInfoList(int steam32Id) {
+  public List<PlayerHeroInfo> getHeroInfoList(final int steam32Id) {
     Optional<List<PlayerHeroInfo>> optionalList = openDotaCache.getPlayerHeroInfo(steam32Id);
 
     if(!optionalList.isPresent()) {
@@ -64,7 +64,7 @@ public class DefaultOpenDotaStatClient implements OpenDotaStatClient {
   }
 
   @Override
-  public List<TeamHeroInfo> getTeamHeroInfoList(int teamId) {
+  public List<TeamHeroInfo> getTeamHeroInfoList(final int teamId) {
     Optional<List<TeamHeroInfo>> optionalList = openDotaCache.getTeamHeroInfo(teamId);
 
     if(!optionalList.isPresent()) {
@@ -81,7 +81,7 @@ public class DefaultOpenDotaStatClient implements OpenDotaStatClient {
   }
 
   @Override
-  public List<TeamMatchInfo> getTeamMatchInfoList(int teamId) {
+  public List<TeamMatchInfo> getTeamMatchInfoList(final int teamId) {
     Optional<List<TeamMatchInfo>> optionalList = openDotaCache.getTeamMatchInfo(teamId);
 
     if(!optionalList.isPresent()) {
