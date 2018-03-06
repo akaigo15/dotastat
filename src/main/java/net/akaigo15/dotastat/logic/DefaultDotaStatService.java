@@ -10,10 +10,12 @@ import net.akaigo15.dotastat.opendota.TeamMatchInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class DefaultDotaStatService implements DotaStatService {
   private static final Logger LOG = LoggerFactory.getLogger(DefaultDotaStatService.class);
 
@@ -40,18 +42,20 @@ public class DefaultDotaStatService implements DotaStatService {
     }
     else {
       rawList = openDotaStatClient.getHeroInfoList(steam32Id, patch);
-      LOG.debug("{}",rawList.size());
       LOG.debug("filterPlayerHeroInfo with steam id: {} and patch: {}",steam32Id,patch);
     }
 
     if(heroType == null || heroType.size() == 0) {
+      LOG.debug("heroType is null or empty");
       return rawList.stream()
+          .peek(s-> LOG.trace("Filtering element: {}",s))
           .filter(s -> s.getGames() >= minimumGamesPlayed)
-          .filter(s -> ((s.getWin() / s.getGames()) >= minimumWinRate))
+          .filter(s -> (calcWinRate(s.getGames(),s.getWin()) >= minimumWinRate))
           .map(s -> new PlayerHeroStats(s, heroData.getHero(s.getHero_id())))
           .collect(Collectors.toList());
 
     }
+    LOG.debug("heroType has: {} values",heroType.size());
     return rawList.stream()
         .filter(s -> hasRole(heroType,getHeroType(s.getHero_id())))
         .filter(s -> s.getGames() >= minimumGamesPlayed)
@@ -128,5 +132,9 @@ public class DefaultDotaStatService implements DotaStatService {
   private boolean spy(int value) {
     LOG.debug("Stream spy value: {}", value);
     return true;
+  }
+
+  private double calcWinRate(final int gamesPlayed, final int wins) {
+    return (double) wins / (double) gamesPlayed;
   }
 }

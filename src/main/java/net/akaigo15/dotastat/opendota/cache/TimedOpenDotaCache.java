@@ -61,16 +61,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<PlayerHeroInfo> cachedObject = playerHeroInfoMap.get(steam32Id);
 
     if(cachedObject == null) {
-      LOG.debug("Steam user: " + steam32Id + " Was not found in playerHeroInfoMap.");
+      LOG.debug("Steam user: " + steam32Id + " was not found in playerHeroInfoMap.");
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
-      LOG.debug("Steam user: " + steam32Id + "Was found in playerHeroInfoMap and up to date.");
+      LOG.debug("Steam user: " + steam32Id + " was found in playerHeroInfoMap and up to date.");
       return Optional.of(cachedObject.getCashedData());
     }
 
-    LOG.debug("Steam user: " + steam32Id + " Was found in playerHeroInfoMap. Cache timed out.");
+    LOG.debug("Steam user: " + steam32Id + " was found in playerHeroInfoMap. Cache timed out.");
     return Optional.empty();
   }
 

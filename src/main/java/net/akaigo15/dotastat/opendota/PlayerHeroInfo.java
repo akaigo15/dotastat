@@ -74,4 +74,18 @@ public class PlayerHeroInfo {
   public void setAgainst_win(int against_win) {
     this.against_win = against_win;
   }
+
+  @Override
+  public String toString() {
+    return "PlayerHeroInfo{" +
+        "hero_id=" + hero_id +
+        ", last_played=" + last_played +
+        ", games=" + games +
+        ", win=" + win +
+        ", with_games=" + with_games +
+        ", with_win=" + with_win +
+        ", against_games=" + against_games +
+        ", against_win=" + against_win +
+        '}';
+  }
 }
