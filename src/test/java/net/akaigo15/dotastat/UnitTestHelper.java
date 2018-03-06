@@ -78,7 +78,7 @@ public class UnitTestHelper {
     info.setHero_id(heroId);
     info.setName("test");
     info.setGames_played(games_played);
-    info.setWins(2);
+    info.setWins(5);
 
     return info;
   }

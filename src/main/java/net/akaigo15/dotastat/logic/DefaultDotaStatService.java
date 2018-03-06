@@ -1,6 +1,5 @@
 package net.akaigo15.dotastat.logic;
 
-import ch.qos.logback.core.db.dialect.SybaseSqlAnywhereDialect;
 import net.akaigo15.dotastat.hero.Hero;
 import net.akaigo15.dotastat.hero.HeroData;
 import net.akaigo15.dotastat.opendota.OpenDotaStatClient;
@@ -50,16 +49,22 @@ public class DefaultDotaStatService implements DotaStatService {
       return rawList.stream()
           .peek(s-> LOG.trace("Filtering element: {}",s))
           .filter(s -> s.getGames() >= minimumGamesPlayed)
+          .peek(s -> LOG.trace("Hero id: {} passed minimumGamesPlayed test",s.getHero_id()))
           .filter(s -> (calcWinRate(s.getGames(),s.getWin()) >= minimumWinRate))
+          .peek(s -> LOG.trace("Hero id: {} passed minimumWinRate test",s.getHero_id()))
           .map(s -> new PlayerHeroStats(s, heroData.getHero(s.getHero_id())))
           .collect(Collectors.toList());
 
     }
     LOG.debug("heroType has: {} values",heroType.size());
     return rawList.stream()
+        .peek(s-> LOG.trace("Filtering element: {}",s))
         .filter(s -> hasRole(heroType,getHeroType(s.getHero_id())))
+        .peek(s -> LOG.trace("Hero id: {} passed role test",s.getHero_id()))
         .filter(s -> s.getGames() >= minimumGamesPlayed)
-        .filter(s -> (((double) (s.getWin()) / (double) (s.getGames())) >= minimumWinRate))
+        .peek(s -> LOG.trace("Hero id: {} passed minimumGamesPlayed test",s.getHero_id()))
+        .filter(s -> (calcWinRate(s.getGames(),s.getWin()) >= minimumWinRate))
+        .peek(s -> LOG.trace("Hero id: {} passed minimumWinRate test",s.getHero_id()))
         .map(s -> new PlayerHeroStats(s, heroData.getHero(s.getHero_id())))
         .collect(Collectors.toList());
   }
@@ -70,17 +75,23 @@ public class DefaultDotaStatService implements DotaStatService {
 
     if (heroType == null || heroType.size() == 0) {
       return rawList.stream()
+          .peek(s-> LOG.trace("Filtering element: {}",s))
           .filter(s -> s.getGames_played() >= minimumGamesPlayed)
-          .filter(s -> ((s.getWins() / s.getGames_played()) >= minimumWinRate))
+          .peek(s -> LOG.trace("Hero id: {} passed minimumGamesPlayed test",s.getHero_id()))
+          .filter(s -> (calcWinRate(s.getGames_played(),s.getWins()) >= minimumWinRate))
+          .peek(s -> LOG.trace("Hero id: {} passed minimumWinRate test",s.getHero_id()))
           .map(s -> new TeamHeroStats(s,heroData.getHero(s.getHero_id())))
           .collect(Collectors.toList());
 
     }
     return rawList.stream()
+        .peek(s-> LOG.trace("Filtering element: {}",s))
         .filter(s -> hasRole(heroType,getHeroType(s.getHero_id())))
-        .peek(s -> LOG.debug("Hero id: {} passed role test",s.getHero_id()))
+        .peek(s -> LOG.trace("Hero id: {} passed role test",s.getHero_id()))
         .filter(s -> s.getGames_played() >= minimumGamesPlayed)
-        .filter(s -> ((s.getWins() / s.getGames_played()) >= minimumWinRate))
+        .peek(s -> LOG.trace("Hero id: {} passed minimumGamesPlayed test",s.getHero_id()))
+        .filter(s -> (calcWinRate(s.getGames_played(),s.getWins()) >= minimumWinRate))
+        .peek(s -> LOG.trace("Hero id: {} passed minimumWinRate test",s.getHero_id()))
         .map(s -> new TeamHeroStats(s,heroData.getHero(s.getHero_id())))
         .collect(Collectors.toList());
   }
@@ -91,12 +102,17 @@ public class DefaultDotaStatService implements DotaStatService {
 
     if(leagueId == null) {
       return rawList.stream()
+          .peek(s-> LOG.trace("Filtering element: {}",s))
           .filter(s -> winningTeam(teamId,s.getRadiant_team_id(),s.getDire_team_id(),s.isRadiant_win()))
+          .peek(s -> LOG.trace("Match id: {} passed winningTeam test",s.getMatch_id()))
           .collect(Collectors.toList());
     } else {
       return rawList.stream()
+          .peek(s-> LOG.trace("Filtering element: {}",s))
           .filter(s -> winningTeam(teamId,s.getRadiant_team_id(),s.getDire_team_id(),s.isRadiant_win()))
+          .peek(s -> LOG.trace("Match id: {} passed winningTeam test",s.getMatch_id()))
           .filter(s -> leagueId == s.getLeagueid())
+          .peek(s -> LOG.trace("Match id: {} passed leagueId test",s.getMatch_id()))
           .collect(Collectors.toList());
     }
 
@@ -120,21 +136,16 @@ public class DefaultDotaStatService implements DotaStatService {
   private boolean hasRole(final List<Hero.Role> requiredRoleList, final List<Hero.Role> heroRoleList) {
     for(Hero.Role r : requiredRoleList) {
       if(heroRoleList.contains(r)) {
-        LOG.debug("{} is found within the requiredRoleList",r);
+        LOG.trace("{} is found within the requiredRoleList",r);
         return true;
       }
-      LOG.debug("{} was not found in requiredRoleList",r);
+      LOG.trace("{} was not found in requiredRoleList",r);
     }
-    LOG.debug("Hero did not meet the requiredRoleList");
+    LOG.trace("Hero did not meet the requiredRoleList");
     return false;
   }
 
-  private boolean spy(int value) {
-    LOG.debug("Stream spy value: {}", value);
-    return true;
-  }
-
   private double calcWinRate(final int gamesPlayed, final int wins) {
-    return (double) wins / (double) gamesPlayed;
+    return ((double) wins) / ((double) gamesPlayed);
   }
 }

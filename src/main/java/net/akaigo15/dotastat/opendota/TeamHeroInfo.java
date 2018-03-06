@@ -37,4 +37,14 @@ public class TeamHeroInfo {
   public void setWins(int wins) {
     this.wins = wins;
   }
+
+  @Override
+  public String toString() {
+    return "TeamHeroInfo{" +
+        "hero_id=" + hero_id +
+        ", name='" + name + '\'' +
+        ", games_played=" + games_played +
+        ", wins=" + wins +
+        '}';
+  }
 }

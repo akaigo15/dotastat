@@ -136,4 +136,18 @@ public class TeamMatchInfo {
   public void setRadiant(boolean radiant) {
     this.radiant = radiant;
   }
+
+  @Override
+  public String toString() {
+    return "TeamMatchInfo{" +
+        "match_id=" + match_id +
+        ", radiant_team_id=" + radiant_team_id +
+        ", dire_team_id=" + dire_team_id +
+        ", leagueid=" + leagueid +
+        ", series_id=" + series_id +
+        ", series_type=" + series_type +
+        ", radiant_win=" + radiant_win +
+        ", radiant=" + radiant +
+        '}';
+  }
 }
