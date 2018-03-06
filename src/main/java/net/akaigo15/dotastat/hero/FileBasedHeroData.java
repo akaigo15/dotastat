@@ -77,7 +77,7 @@ public class FileBasedHeroData implements HeroData {
     for(int i = 2; i < heroArray.length; i++) {
       role.add(Hero.Role.valueOf(heroArray[i]));
     }
-    LOG.debug("Hero loaded: {}", name);
+    LOG.trace("Hero loaded: {}", name);
 
     return new Hero(role, id, name);
   }

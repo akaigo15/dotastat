@@ -35,25 +35,25 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   @Override
   public void addPlayerHeroInfo(final List<PlayerHeroInfo> playerHeroInfoList, final int steam32Id) {
     playerHeroInfoMap.put(steam32Id, new TimedCachedObject<>(playerHeroInfoList));
-    LOG.debug("Put steam user: " + steam32Id + " playerHeroInfoList into playerHeroInfoMap");
+    LOG.debug("Put steam user: {} playerHeroInfoList into playerHeroInfoMap",steam32Id);
   }
 
   @Override
   public void addPlayerHeroPatchInfo(final List<PlayerHeroInfo> playerHeroInfoList, final int steam32Id, final int patch) {
     playerHeroInfoPatchMap.put(new IdandPatchKey(steam32Id, patch), new TimedCachedObject<>(playerHeroInfoList));
-    LOG.debug("Put steam user: " + steam32Id + " playerHeroInfoList and patch : " + patch + " into playerHeroPatchInfoMap");
+    LOG.debug("Put steam user: {} playerHeroInfoList and patch : {} into playerHeroPatchInfoMap",steam32Id,patch);
   }
 
   @Override
   public void addTeamHeroInfo(final List<TeamHeroInfo> teamHeroInfoList, final int teamId) {
     teamHeroInfoMap.put(teamId, new TimedCachedObject<>(teamHeroInfoList));
-    LOG.debug("Put team: " + teamId + " teamHeroInfoList into teamHeroInfoMap");
+    LOG.debug("Put team: {} teamHeroInfoList into teamHeroInfoMap",teamId);
   }
 
   @Override
   public void addTeamMatchInfo(final List<TeamMatchInfo> teamMatchInfoList, final int teamId) {
     teamMatchInfoMap.put(teamId, new TimedCachedObject<>(teamMatchInfoList));
-    LOG.debug("Put team: " + teamId + " teamMatchInfoList into teamMatchInfoMap");
+    LOG.debug("Put team: {} teamMatchInfoList into teamMatchInfoMap",teamId);
   }
 
   @Override
@@ -61,16 +61,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<PlayerHeroInfo> cachedObject = playerHeroInfoMap.get(steam32Id);
 
     if(cachedObject == null) {
-      LOG.debug("Steam user: " + steam32Id + " was not found in playerHeroInfoMap.");
+      LOG.debug("Steam user: {} was not found in playerHeroInfoMap.",steam32Id);
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
-      LOG.debug("Steam user: " + steam32Id + " was found in playerHeroInfoMap and up to date.");
+      LOG.debug("Steam user: {} was found in playerHeroInfoMap and up to date.",steam32Id);
       return Optional.of(cachedObject.getCashedData());
     }
 
-    LOG.debug("Steam user: " + steam32Id + " was found in playerHeroInfoMap. Cache timed out.");
+    LOG.debug("Steam user: {} was found in playerHeroInfoMap. Cache timed out.",steam32Id);
     return Optional.empty();
   }
 
@@ -79,16 +79,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<PlayerHeroInfo> cachedObject = playerHeroInfoPatchMap.get(new IdandPatchKey(steam32Id, patch));
 
     if(cachedObject == null) {
-      LOG.debug("Steam user: " + steam32Id + " with patch: " + patch + " Was not found in playerHeroPatchInfoMap.");
+      LOG.debug("Steam user: {} with patch: {} Was not found in playerHeroPatchInfoMap.",steam32Id,patch);
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
-      LOG.debug("Steam user: " + steam32Id + "with patch: " + patch + " Was found in playerHeroPatchInfoMap and is up to date.");
+      LOG.debug("Steam user: {} with patch: {} Was found in playerHeroPatchInfoMap and is up to date.",steam32Id,patch);
       return Optional.of(cachedObject.getCashedData());
     }
 
-    LOG.debug("Steam user: " + steam32Id + "with patch: " + patch + " Was found in playerHeroPatchInfoMap. Cache timed out.");
+    LOG.debug("Steam user: {} with patch: {} Was found in playerHeroPatchInfoMap. Cache timed out.",steam32Id,patch);
     return Optional.empty();
   }
 
@@ -97,16 +97,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<TeamHeroInfo> cachedObject = teamHeroInfoMap.get(teamId);
 
     if(cachedObject == null) {
-      LOG.debug("Team: " + teamId + " Was not found in TeamHeroInfoMap.");
+      LOG.debug("Team: {} Was not found in TeamHeroInfoMap.",teamId);
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
-      LOG.debug("Team: " + teamId + " Was found in TeamHeroInfoMap and is up to date.");
+      LOG.debug("Team: {} Was found in TeamHeroInfoMap and is up to date.",teamId);
       return Optional.of(cachedObject.getCashedData());
     }
 
-    LOG.debug("Team: " + teamId + " Was found in TeamHeroInfoMap. Cache timed out.");
+    LOG.debug("Team: {} Was found in TeamHeroInfoMap. Cache timed out.",teamId);
     return Optional.empty();
   }
 
@@ -115,16 +115,16 @@ public class TimedOpenDotaCache implements OpenDotaCache {
     TimedCachedObject<TeamMatchInfo> cachedObject = teamMatchInfoMap.get(teamId);
 
     if(cachedObject == null) {
-      LOG.debug("Team: " + teamId + " Was not found in TeamMatchInfoMap.");
+      LOG.debug("Team: {} Was not found in TeamMatchInfoMap.",teamId);
       return Optional.empty();
     }
 
     if(timeCheck(cachedObject.getTimeSubmitted())) {
-      LOG.debug("Team: " + teamId + " Was found in TeamMatchInfoMap and is up to date.");
+      LOG.debug("Team: {} Was found in TeamMatchInfoMap and is up to date.",teamId);
       return Optional.of(cachedObject.getCashedData());
     }
 
-    LOG.debug("Team: " + teamId + " Was found in TeamMatchInfoMap. Cache timed out.");
+    LOG.debug("Team: {} Was found in TeamMatchInfoMap. Cache timed out.",teamId);
     return Optional.empty();
   }
 
