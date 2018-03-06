@@ -29,7 +29,7 @@ public class FileBasedHeroData implements HeroData {
 
   @Override
   public Hero getHero(final int heroId) {
-    return null;
+    return heroMap.get(heroId);
   }
 
   @Override

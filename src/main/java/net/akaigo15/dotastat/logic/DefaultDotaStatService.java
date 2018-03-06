@@ -1,5 +1,6 @@
 package net.akaigo15.dotastat.logic;
 
+import ch.qos.logback.core.db.dialect.SybaseSqlAnywhereDialect;
 import net.akaigo15.dotastat.hero.Hero;
 import net.akaigo15.dotastat.hero.HeroData;
 import net.akaigo15.dotastat.opendota.OpenDotaStatClient;
@@ -39,6 +40,7 @@ public class DefaultDotaStatService implements DotaStatService {
     }
     else {
       rawList = openDotaStatClient.getHeroInfoList(steam32Id, patch);
+      LOG.debug("{}",rawList.size());
       LOG.debug("filterPlayerHeroInfo with steam id: {} and patch: {}",steam32Id,patch);
     }
 
@@ -53,7 +55,7 @@ public class DefaultDotaStatService implements DotaStatService {
     return rawList.stream()
         .filter(s -> hasRole(heroType,getHeroType(s.getHero_id())))
         .filter(s -> s.getGames() >= minimumGamesPlayed)
-        .filter(s -> ((s.getWin() / s.getGames()) >= minimumWinRate))
+        .filter(s -> (((double) (s.getWin()) / (double) (s.getGames())) >= minimumWinRate))
         .map(s -> new PlayerHeroStats(s, heroData.getHero(s.getHero_id())))
         .collect(Collectors.toList());
   }
@@ -71,7 +73,8 @@ public class DefaultDotaStatService implements DotaStatService {
 
     }
     return rawList.stream()
-        .filter(s -> getHeroType(s.getHero_id()) == heroType)
+        .filter(s -> hasRole(heroType,getHeroType(s.getHero_id())))
+        .peek(s -> LOG.debug("Hero id: {} passed role test",s.getHero_id()))
         .filter(s -> s.getGames_played() >= minimumGamesPlayed)
         .filter(s -> ((s.getWins() / s.getGames_played()) >= minimumWinRate))
         .map(s -> new TeamHeroStats(s,heroData.getHero(s.getHero_id())))
@@ -113,10 +116,17 @@ public class DefaultDotaStatService implements DotaStatService {
   private boolean hasRole(final List<Hero.Role> requiredRoleList, final List<Hero.Role> heroRoleList) {
     for(Hero.Role r : requiredRoleList) {
       if(heroRoleList.contains(r)) {
+        LOG.debug("{} is found within the requiredRoleList",r);
         return true;
       }
+      LOG.debug("{} was not found in requiredRoleList",r);
     }
+    LOG.debug("Hero did not meet the requiredRoleList");
     return false;
   }
 
+  private boolean spy(int value) {
+    LOG.debug("Stream spy value: {}", value);
+    return true;
+  }
 }

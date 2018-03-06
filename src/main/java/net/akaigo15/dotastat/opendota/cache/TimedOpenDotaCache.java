@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class TimedOpenDotaCache implements OpenDotaCache {
@@ -25,10 +26,10 @@ public class TimedOpenDotaCache implements OpenDotaCache {
   @Autowired
   public TimedOpenDotaCache(DotaCacheConfig config) {
     this.config = config;
-    playerHeroInfoMap = new HashMap<>();
-    playerHeroInfoPatchMap = new HashMap<>();
-    teamHeroInfoMap = new HashMap<>();
-    teamMatchInfoMap = new HashMap<>();
+    playerHeroInfoMap = new ConcurrentHashMap<>();
+    playerHeroInfoPatchMap = new ConcurrentHashMap<>();
+    teamHeroInfoMap = new ConcurrentHashMap<>();
+    teamMatchInfoMap = new ConcurrentHashMap<>();
   }
 
   @Override

@@ -97,5 +97,4 @@ public class DefaultOpenDotaStatClient implements OpenDotaStatClient {
     return optionalList.get();
   }
 
-
 }
