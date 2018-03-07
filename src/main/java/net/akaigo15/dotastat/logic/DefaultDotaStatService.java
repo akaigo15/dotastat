@@ -32,8 +32,16 @@ public class DefaultDotaStatService implements DotaStatService {
   }
 
   @Override
-  public List<PlayerHeroStats> filterPlayerHeroInfo(final int steam32Id, final Integer patch, final List<Hero.Role> heroType, final int minimumGamesPlayed, final double minimumWinRate) {
+  public List<PlayerHeroStats> filterPlayerHeroInfo(final int steam32Id, final Integer patch, final List<Hero.Role> heroType, int minimumGamesPlayedInput, final double minimumWinRate) {
     List<PlayerHeroInfo> rawList;
+
+    final int minimumGamesPlayed;
+
+    if(minimumGamesPlayedInput == 0 || minimumGamesPlayedInput < 1) {
+      minimumGamesPlayed = 1;
+    } else {
+      minimumGamesPlayed = minimumGamesPlayedInput;
+    }
 
     if(patch == null) {
       rawList = openDotaStatClient.getHeroInfoList(steam32Id);
@@ -70,8 +78,16 @@ public class DefaultDotaStatService implements DotaStatService {
   }
 
   @Override
-  public List<TeamHeroStats> filterTeamHeroInfo(final int teamId, final List<Hero.Role> heroType, final int minimumGamesPlayed, final double minimumWinRate) {
+  public List<TeamHeroStats> filterTeamHeroInfo(final int teamId, final List<Hero.Role> heroType, int minimumGamesPlayedInput, final double minimumWinRate) {
     List<TeamHeroInfo> rawList = openDotaStatClient.getTeamHeroInfoList(teamId);
+
+    final int minimumGamesPlayed;
+
+    if(minimumGamesPlayedInput == 0 || minimumGamesPlayedInput < 1) {
+      minimumGamesPlayed = 1;
+    } else {
+      minimumGamesPlayed = minimumGamesPlayedInput;
+    }
 
     if (heroType == null || heroType.size() == 0) {
       return rawList.stream()

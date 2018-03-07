@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DotaStatService {
 
-  List<PlayerHeroStats> filterPlayerHeroInfo(final int steam32Id, final Integer patch, final List<Hero.Role> heroType, final int minimumGamesPlayed, final double minimumWinRate);
-  List<TeamHeroStats> filterTeamHeroInfo(final int teamId, List<Hero.Role> heroType, final int minimumGamesPlayed, final double minimumWinRate);
+  List<PlayerHeroStats> filterPlayerHeroInfo(final int steam32Id, final Integer patch, final List<Hero.Role> heroType, int minimumGamesPlayed, final double minimumWinRate);
+  List<TeamHeroStats> filterTeamHeroInfo(final int teamId, List<Hero.Role> heroType, int minimumGamesPlayed, final double minimumWinRate);
   List<TeamMatchInfo> filterTeamMatchInfo(final int teamId, final Integer leagueId, final boolean win);
 }

@@ -15,8 +15,8 @@ public class DefaultOpenDotaStatClient implements OpenDotaStatClient {
   private static final Logger LOG = LoggerFactory.getLogger(DefaultOpenDotaStatClient.class);
 
   private static final String URL_HEROES_FOR_PLAYER = "https://api.opendota.com/api/players/%s/heroes";
-  private static final String ULR_HEROES_FOR_TEAM = " https://api.opendota.com/api/teams/%s/heroes";
-  private static final String ULR_MATCHES_FOR_TEAM = " https://api.opendota.com/api/teams/%s/matches";
+  private static final String ULR_HEROES_FOR_TEAM = "https://api.opendota.com/api/teams/%s/heroes";
+  private static final String ULR_MATCHES_FOR_TEAM = "https://api.opendota.com/api/teams/%s/matches";
 
 
   private RestTemplate restTemplate;

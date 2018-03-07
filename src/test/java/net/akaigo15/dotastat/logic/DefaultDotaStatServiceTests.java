@@ -724,7 +724,7 @@ public class DefaultDotaStatServiceTests {
     assertThat(outputList).isNotNull();
     assertThat(outputList.size()).isEqualTo(4);
   }
-  
+
   @Test
   public void filterTeamMatchInfo_withLeague() {
     List<TeamMatchInfo> list = new ArrayList<>();

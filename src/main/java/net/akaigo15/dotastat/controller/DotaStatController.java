@@ -44,15 +44,28 @@ class DotaStatController {
   @RequestMapping(method = RequestMethod.POST,
       path = "/teamherostat")
   @ResponseBody
-  public List<TeamHeroStats> getTeamHeroStats() {
-    return null;
+  public List<TeamHeroStats> getTeamHeroStats(@RequestBody TeamHeroParams teamHeroParams) {
+    LOG.debug("getTeamHeroStats called with: {}",teamHeroParams);
+
+    List<Hero.Role> roleList = teamHeroParams.getHeroType().stream()
+        .map(Hero.Role::valueOf)
+        .collect(Collectors.toList());
+
+    return dotaStatService.filterTeamHeroInfo(teamHeroParams.getTeamId(),
+        roleList,
+        teamHeroParams.getMinimumGamesPlayed(),
+        teamHeroParams.getMinimumWinRate());
   }
 
   @RequestMapping(method = RequestMethod.POST,
       path = "/teammatchstat")
   @ResponseBody
-  public List<TeamMatchInfo> getTeamMatchStats() {
-    return null;
+  public List<TeamMatchInfo> getTeamMatchStats(@RequestBody TeamMatchParams teamMatchParams) {
+    LOG.debug("getTeamMatchStats called with: {}",teamMatchParams);
+
+    return dotaStatService.filterTeamMatchInfo(teamMatchParams.getTeamId(),
+        teamMatchParams.getLeagueId(),
+        teamMatchParams.isWin());
   }
 
 }
