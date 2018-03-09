@@ -32,7 +32,7 @@ public class DefaultDotaStatService implements DotaStatService {
   }
 
   @Override
-  public List<PlayerHeroStats> filterPlayerHeroInfo(final int steam32Id, final Integer patch, final List<Hero.Role> heroType, int minimumGamesPlayedInput, final double minimumWinRate) {
+  public List<PlayerHeroStats> filterPlayerHeroInfo(final int steam32Id, final Integer patch, final List<Hero.Role> heroType, final int minimumGamesPlayedInput, final double minimumWinRate) {
     List<PlayerHeroInfo> rawList;
 
     final int minimumGamesPlayed;
@@ -78,7 +78,7 @@ public class DefaultDotaStatService implements DotaStatService {
   }
 
   @Override
-  public List<TeamHeroStats> filterTeamHeroInfo(final int teamId, final List<Hero.Role> heroType, int minimumGamesPlayedInput, final double minimumWinRate) {
+  public List<TeamHeroStats> filterTeamHeroInfo(final int teamId, final List<Hero.Role> heroType, final int minimumGamesPlayedInput, final double minimumWinRate) {
     List<TeamHeroInfo> rawList = openDotaStatClient.getTeamHeroInfoList(teamId);
 
     final int minimumGamesPlayed;
