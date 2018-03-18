@@ -66,7 +66,7 @@ public class DefaultOpenDotaStatClient implements OpenDotaStatClient {
       catch (InterruptedException e) {
         LOG.warn("Thread interrupted while sleeping in getHeroInfoList");
       }
-      
+
       semaphore.release();
       return info;
     }

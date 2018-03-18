@@ -3,10 +3,15 @@ package net.akaigo15.dotastat.opendota;
 import net.akaigo15.dotastat.opendota.cache.OpenDotaCache;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
-
+import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
