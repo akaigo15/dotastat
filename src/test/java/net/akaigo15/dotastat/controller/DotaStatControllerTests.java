@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.akaigo15.dotastat.hero.Hero;
 import net.akaigo15.dotastat.logic.DotaStatService;
 import net.akaigo15.dotastat.logic.PlayerHeroStats;
+import net.akaigo15.dotastat.logic.TeamHeroStats;
 import net.akaigo15.dotastat.opendota.PlayerHeroInfo;
+import net.akaigo15.dotastat.opendota.TeamHeroInfo;
+import net.akaigo15.dotastat.opendota.TeamMatchInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -69,6 +73,59 @@ public class DotaStatControllerTests {
         .andExpect(content().json(listAsJson));
   }
 
+  @Test
+  public void getTeamHeroStats_confirmMethodSignature() throws Exception {
+    TeamHeroParams teamHeroParams = new TeamHeroParams();
+    teamHeroParams.setHeroType(new ArrayList<>());
 
+    Hero hero = new Hero(new ArrayList<Hero.Role>(),1,"name");
+    TeamHeroStats teamHeroStats = new TeamHeroStats(new TeamHeroInfo(),hero);
+    List<TeamHeroStats> list = new ArrayList<>();
+    list.add(teamHeroStats);
+
+    String listAsJson = objectMapper.writeValueAsString(list);
+
+    when(dotaStatService.filterTeamHeroInfo(Matchers.anyInt(),
+        Matchers.anyList(),
+        Matchers.anyInt(),
+        Matchers.anyInt())).thenReturn(list);
+
+    String json = objectMapper.writeValueAsString(teamHeroParams);
+    mockMvc.perform
+
+        (post("/dotastat/teamherostat")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(json))
+
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(listAsJson));
+  }
+
+  @Test
+  public void getTeamMatchStats_confirmMethodSignature() throws Exception {
+    TeamMatchParams teamMatchParams = new TeamMatchParams();
+
+    TeamMatchInfo teamMatchInfo = new TeamMatchInfo();
+    List<TeamMatchInfo> list = new ArrayList<>();
+    list.add(teamMatchInfo);
+
+    String listAsJson = objectMapper.writeValueAsString(list);
+
+    when(dotaStatService.filterTeamMatchInfo(Matchers.anyInt(),
+        Matchers.anyInt(),
+        Matchers.anyBoolean())).thenReturn(list);
+
+    String json = objectMapper.writeValueAsString(teamMatchParams);
+    mockMvc.perform
+
+        (post("/dotastat/teammatchstat")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json))
+
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(content().json(listAsJson));
+  }
 
 }
