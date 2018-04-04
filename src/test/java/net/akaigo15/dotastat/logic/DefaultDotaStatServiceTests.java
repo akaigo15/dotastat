@@ -9,7 +9,10 @@ import net.akaigo15.dotastat.opendota.TeamHeroInfo;
 import net.akaigo15.dotastat.opendota.TeamMatchInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -17,7 +20,6 @@ import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static net.akaigo15.dotastat.UnitTestHelper.*;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 
 

@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.truth.Truth.assertThat;
-import static net.akaigo15.dotastat.UnitTestHelper.makePlayerHeroInfo;
-import static net.akaigo15.dotastat.UnitTestHelper.makeTeamHeroInfo;
-import static net.akaigo15.dotastat.UnitTestHelper.makeTeamMatchInfo;
+import static net.akaigo15.dotastat.UnitTestHelper.*;
 
 public class TimedOpenDotaCacheTests {
 

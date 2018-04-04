@@ -7,19 +7,18 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
-import org.mockito.Mock;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.truth.Truth.assertThat;
-import static net.akaigo15.dotastat.UnitTestHelper.makePlayerHeroInfo;
-import static net.akaigo15.dotastat.UnitTestHelper.makeTeamHeroInfo;
-import static net.akaigo15.dotastat.UnitTestHelper.makeTeamMatchInfo;
+import static net.akaigo15.dotastat.UnitTestHelper.*;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;

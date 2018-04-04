@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <title>Dota Stat</title>
+    <link rel="stylesheet" type="text/css" href="js/jquery/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="css/dotastat.css">
+    <script src="js/jquery/external/jquery/jquery.js"></script>
+    <script src="js/jquery/jquery-ui.min.js"></script>
+</head>
+
+<body class="ui-widget-content">
+
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-search">Search</a></li>
+        <li><a href="#tabs-results">Results</a></li>
+    </ul>
+
+    <!-- =============================================================================
+         search tab
+         ============================================================================= -->
+    <div id="tabs-search">
+        <form>
+            <div class="clearfix">
+                <div class="column33">
+                    <div class="column50">
+                        Name <br>
+                        <input name="name1" type="text">
+                        <input name="name2" type="text">
+                        <input name="name3" type="text">
+                        <input name="name4" type="text">
+                        <input name="name5" type="text">
+                    </div>
+                    <div class="column50">
+                        Steam32Id <br>
+                        <input name="steam32Id1" type="text">
+                        <input name="steam32Id2" type="text">
+                        <input name="steam32Id3" type="text">
+                        <input name="steam32Id4" type="text">
+                        <input name="steam32Id5" type="text">
+                    </div>
+                </div>
+
+                <div class="column33">
+                    <div class="column50">
+                        Minimum games played <br>
+                        <input name="gamesplayed" type="number">
+                    </div>
+                    <div class="column50">
+                        Minimum winrate <br>
+                        <input name="winrate" type="number">
+                        <select name="patch">
+                            <option value="null">All</option>
+                            <option value="712">7.12</option>
+                            <option value="711">7.11</option>
+                            <option value="710">7.10</option>
+                            <option value="709">7.09</option>
+                            <option value="708">7.08</option>
+                            <option value="707">7.07</option>
+                            <option value="706">7.06</option>
+                            <option value="705">7.05</option>
+                            <option value="704">7.04</option>
+                            <option value="703">7.03</option>
+                            <option value="702">7.02</option>
+                            <option value="701">7.01</option>
+                            <option value="700">7.00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="column33">
+                    Position <br>
+                    1 <input name="pos1" type="checkbox"><br>
+                    2 <input name="pos2" type="checkbox"><br>
+                    3 <input name="pos3" type="checkbox"><br>
+                    4 <input name="pos4" type="checkbox"><br>
+                    5 <input name="pos5" type="checkbox"><br>
+                </div>
+            <button type="button">Search</button>
+            </div>
+        </form>
+
+
+
+    </div>
+
+     <!-- =============================================================================
+          results tab
+          ============================================================================= -->
+
+    <div id="tabs-results">
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready ( function() {
+        $("#tabs").tabs();
+    });
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+}
+
+.column33 {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+}
+
+.column50 {
+    float: left;
+    width: 50.00%;
+    padding: 5px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

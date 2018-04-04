@@ -1,9 +1,5 @@
 package net.akaigo15.dotastat.logic;
 
-import net.akaigo15.dotastat.opendota.PlayerHeroInfo;
-
-import java.util.Map;
-
 public class AdvancedPlayerHeroInfo {
 
   private String heroName;

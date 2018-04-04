@@ -1,7 +1,5 @@
 package net.akaigo15.dotastat.hero;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.List;
 
 public class Hero {

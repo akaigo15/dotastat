@@ -1,7 +1,5 @@
 package net.akaigo15.dotastat.controller;
 
-import net.akaigo15.dotastat.hero.Hero;
-
 import java.util.List;
 
 public class TeamHeroParams {
