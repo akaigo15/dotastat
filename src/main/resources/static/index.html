@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/dotastat.css">
     <script src="js/jquery/external/jquery/jquery.js"></script>
     <script src="js/jquery/jquery-ui.min.js"></script>
+    <script src="js/searchtab.js"></script>
 </head>
 
 <body class="ui-widget-content">
@@ -25,31 +26,35 @@
                 <div class="column33">
                     <div class="column50">
                         Name <br>
-                        <input name="name1" type="text">
-                        <input name="name2" type="text">
-                        <input name="name3" type="text">
-                        <input name="name4" type="text">
-                        <input name="name5" type="text">
+                        <input name="name1" type="text" id="name1">
+                        <input name="name2" type="text" id="name2">
+                        <input name="name3" type="text" id="name3">
+                        <input name="name4" type="text" id="name4">
+                        <input name="name5" type="text" id="name5">
                     </div>
                     <div class="column50">
                         Steam32Id <br>
-                        <input name="steam32Id1" type="text">
-                        <input name="steam32Id2" type="text">
-                        <input name="steam32Id3" type="text">
-                        <input name="steam32Id4" type="text">
-                        <input name="steam32Id5" type="text">
+                        <input name="steam32Id1" type="text" id="steam32Id1">
+                        <input name="steam32Id2" type="text" id="steam32Id2">
+                        <input name="steam32Id3" type="text" id="steam32Id3">
+                        <input name="steam32Id4" type="text" id="steam32Id4">
+                        <input name="steam32Id5" type="text" id="steam32Id5">
                     </div>
                 </div>
 
-                <div class="column33">
-                    <div class="column50">
+                <div class="column33 height250 relativepos">
+
+                    <div class="width200 absolute-left margin40">
                         Minimum games played <br>
-                        <input name="gamesplayed" type="number">
+                        <input name="gamesplayed" type="number" id="gamesplayed">
                     </div>
-                    <div class="column50">
+
+
+                    <div class="width200 absolute-right margin40">
                         Minimum winrate <br>
-                        <input name="winrate" type="number">
-                        <select name="patch">
+                        <input name="winrate" type="number" id="winrate">
+                        <p>Patch</p>
+                        <select name="patch" class="margin-10" id="patch">
                             <option value="null">All</option>
                             <option value="712">7.12</option>
                             <option value="711">7.11</option>
@@ -68,15 +73,15 @@
                     </div>
                 </div>
 
-                <div class="column33">
+                <div class="column33 height250">
                     Position <br>
-                    1 <input name="pos1" type="checkbox"><br>
-                    2 <input name="pos2" type="checkbox"><br>
-                    3 <input name="pos3" type="checkbox"><br>
-                    4 <input name="pos4" type="checkbox"><br>
-                    5 <input name="pos5" type="checkbox"><br>
+                    1 <input name="pos1" type="checkbox" class="possearch"><br>
+                    2 <input name="pos2" type="checkbox" class="possearch"><br>
+                    3 <input name="pos3" type="checkbox" class="possearch"><br>
+                    4 <input name="pos4" type="checkbox" class="possearch"><br>
+                    5 <input name="pos5" type="checkbox" class="possearch"><br>
                 </div>
-            <button type="button">Search</button>
+            <button type="button" class="margin845" id="submit">Search</button>
             </div>
         </form>
 
@@ -98,6 +103,7 @@
 <script>
     $(document).ready ( function() {
         $("#tabs").tabs();
+        SearchTab.startup();
     });
 </script>
 

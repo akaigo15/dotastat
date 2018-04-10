@@ -19,3 +19,45 @@
     clear: both;
     display: table;
 }
+
+div.column50 > input, div.column33 > input {
+    margin-top: 10px;
+}
+
+.width200  {
+    width: 200px;
+}
+
+.absolute-right {
+    position: absolute;
+    top: 0px;
+    right: 0;
+}
+
+.absolute-left {
+	position: absolute;
+    top: 0px;
+    left: 0;
+}
+
+.height250 {
+    height:250px;
+}
+
+.relativepos {
+    position: relative;
+}
+
+.margin40 {
+    margin-right: 40px;
+    margin-left: 40px;
+}
+
+.margin845 {
+    margin-left: 845.5px;
+    margin-right: 845.5px;
+}
+
+.margin-10 {
+    margin-top: -10px;
+}
