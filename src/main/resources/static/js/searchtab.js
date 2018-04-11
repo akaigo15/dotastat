@@ -3,32 +3,26 @@ SearchTab = {
     startup: function() {
         //define callback
         this.bindSearchPress();
+        this.bindSteamIds();
 
         //initially disable other steamid inputs
 
-        var x = document.getElementsByClassName("t1");
+        $('.t1').each(function (i) {
+            this.disabled = true;
+        });
 
-        for(i = 0; i < x.length; i++) {
-            x[i].disabled = true;
-        }
+        $('.t2').each(function (i) {
+            this.disabled = true;
+        });
 
-        x = document.getElementsByClassName("t2")
+        $('.t3').each(function (i) {
+            this.disabled = true;
+        });
 
-        for(i = 0; i < x.length; i++) {
-            x[i].disabled = true;
-        }
+        $('.t4').each(function (i) {
+            this.disabled = true;
+        });
 
-        x = document.getElementsByClassName("t3")
-
-        for(i = 0; i < x.length; i++) {
-            x[i].disabled = true;
-        }
-
-        x = document.getElementsByClassName("t4")
-
-        for(i = 0; i < x.length; i++) {
-            x[i].disabled = true;
-        }
         
     },
 
@@ -38,8 +32,68 @@ SearchTab = {
          });
     },
 
+    bindSteamIds: function() {
+       $( '#steam32Id1' ).change( function( event, ui ) {
+            var text = $( "#steam32Id1" ).val();
+            if(text.length > 0) {
+                $('.t1').each(function (i) {
+                    this.disabled = false;
+                });
+            }
+            else{
+                $('.t1').each(function (i) {
+                    this.disabled = true;
+                });
+            }
+          });
+
+       $( '#steam32Id2' ).change( function( event, ui ) {
+            var text = $( "#steam32Id2" ).val();
+            if(text.length > 0) {
+                $('.t2').each(function (i) {
+                    this.disabled = false;
+                });
+            }
+            else{
+                $('.t2').each(function (i) {
+                    this.disabled = true;
+                });
+            }
+          });
+
+       $( '#steam32Id3' ).change( function( event, ui ) {
+            var text = $( "#steam32Id3" ).val();
+            if(text.length > 0) {
+                $('.t3').each(function (i) {
+                    this.disabled = false;
+                });
+            }
+            else{
+                $('.t3').each(function (i) {
+                    this.disabled = true;
+                });
+            }
+          });
+
+       $( '#steam32Id4' ).change( function( event, ui ) {
+            var text = $( "#steam32Id4" ).val();
+            if(text.length > 0) {
+                $('.t4').each(function (i) {
+                    this.disabled = false;
+                });
+            }
+            else{
+                $('.t4').each(function (i) {
+                    this.disabled = true;
+                });
+            }
+          });
+
+    },
+
+
     getName: function(number) {
-        var name = document.getElementById("name"+number).value;
+        var name = $('#name'+number).val();
 
         if(name.trim().length==0) {
             name = null;
@@ -50,9 +104,8 @@ SearchTab = {
     },
 
     getSteamId: function(number) {
-        var id = document.getElementById("steam32Id"+number).value;
-
-        if(id.trim().length==0) {
+        var id = $('#steam32Id'+number).val();
+        if(id.length == 0) {
             id = null;
             return id;
         }
@@ -61,7 +114,7 @@ SearchTab = {
     },
 
     getMinGames: function() {
-        var mingames = document.getElementById("gamesplayed").value.trim();
+        var mingames = $('#gamesplayed').val();
 
         if(mingames % 1 != 0) {
             mingames = mingames - (mingames % 1);
@@ -71,7 +124,7 @@ SearchTab = {
     },
 
     getMinWinrate: function() {
-        var winrate = document.getElementById("winrate").value.trim();
+        var winrate = $('#winrate').val();
 
         if(winrate < 0) {
             winrate = 0;
@@ -83,7 +136,7 @@ SearchTab = {
     getPositions: function() {
         var positions = new Array();
 
-        var x = document.getElementsByClassName("possearch");
+        var x = $('.possearch');
 
         for(i = 0; i < x.length; i++) {
 
@@ -100,7 +153,7 @@ SearchTab = {
     },
 
     getPatch: function() {
-        var patch = document.getElementById("patch").value;
+        var patch = $('#patch').val();
 
         return patch;
     },
