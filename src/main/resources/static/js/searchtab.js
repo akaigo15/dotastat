@@ -127,6 +127,10 @@ SearchTab = {
             mingames = mingames - (mingames % 1);
         }
 
+        if(mingames == '') {
+            mingames = 0
+        }
+
         return mingames;
     },
 
@@ -154,7 +158,7 @@ SearchTab = {
 
 
         if(positions.length == 0) {
-            positions = null
+            positions = []
         }
 
         return positions;
@@ -183,27 +187,30 @@ SearchTab = {
 
         for(i = 1; i < 6; i++) {
 
-            if($('#steam32Id'+i).val().trim().length > 0 ) {
-
+            if(this.getSteamId(i) != null ) {
+                var id = $('#steam32Id'+i).val().trim();
                 var name = $('#name'+i).val().trim();
 
                 console.log("steam32Id"+i+" passed");
-                var toSend = {steam32Id: this.getSteamId(i),patch:patch,heroType:poslist,minimumGamesPlayed:mingames,minimumWinRate:minwinrate};
+                var toSend = {"steam32Id": this.getSteamId(i),"patch":patch,"heroType":poslist,"minimumGamesPlayed":mingames,"minimumWinRate":minwinrate};
                 toSend = JSON.stringify(toSend);
 
                 console.log(toSend);
-
+                urltest = this.baseURL + "/dotastat/playerstat"
+                console.log(urltest);
                 $.ajax({
-                  type: "POST",
-                  url: this.baseUrl + "/dotastat/playerstat",
+                  type: "post",
+                  url: urltest,
+
                   data: toSend,
-                  contentType: "application/json; charset=utf-8",
-                  dataType: "json",
+                  contentType: "application/json",
                   success: function(data, status, jqXHR) {
-                    console.log("name: " + name + "id: " + this.getSteamId(i) + "data: " + data);
+                    console.log("name: " + name + " id: " + id + " data: " + JSON.stringify(data));
                   },
                   error: function(jqXHR, textStatus, errorThrown) {
                     console.log("text status: " + textStatus);
+                    console.log("errorThrown: " + errorThrown);
+                    console.log(jqXHR);
                   }
 
                 });
