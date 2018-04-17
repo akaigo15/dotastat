@@ -75,11 +75,11 @@
 
                 <div class="column33 height250">
                     Position <br>
-                    1 <input name="pos1" type="checkbox" class="possearch"><br>
-                    2 <input name="pos2" type="checkbox" class="possearch"><br>
-                    3 <input name="pos3" type="checkbox" class="possearch"><br>
-                    4 <input name="pos4" type="checkbox" class="possearch"><br>
-                    5 <input name="pos5" type="checkbox" class="possearch"><br>
+                    1 <input data-enum="CORE_1" type="checkbox" class="possearch"><br>
+                    2 <input data-enum="CORE_2" type="checkbox" class="possearch"><br>
+                    3 <input data-enum="CORE_3" type="checkbox" class="possearch"><br>
+                    4 <input data-enum="SUPPORT_4" type="checkbox" class="possearch"><br>
+                    5 <input data-enum="SUPPORT_5" type="checkbox" class="possearch"><br>
                 </div>
             <button type="button" class="margin845" id="submit">Search</button>
             </div>
@@ -102,8 +102,13 @@
 
 <script>
     $(document).ready ( function() {
+
+        var rawURL = location.href;
+        var generatedURL = rawURL.substring(0, rawURL.length-1);
+        console.log('URL is: ' + generatedURL);
+
         $("#tabs").tabs();
-        SearchTab.startup();
+        SearchTab.startup(generatedURL);
     });
 </script>
 

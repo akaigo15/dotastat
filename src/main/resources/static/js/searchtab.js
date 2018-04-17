@@ -1,6 +1,11 @@
 SearchTab = {
 
-    startup: function() {
+    baseURL: '',
+
+    startup: function(generatedURL) {
+
+        this.baseURL = generatedURL;
+
         //define callback
         this.bindSearchPress();
         this.bindSteamIds();
@@ -23,7 +28,7 @@ SearchTab = {
             this.disabled = true;
         });
 
-        
+
     },
 
     bindSearchPress: function() {
@@ -34,7 +39,7 @@ SearchTab = {
 
     bindSteamIds: function() {
        $( '#steam32Id1' ).change( function( event, ui ) {
-            var text = $( "#steam32Id1" ).val();
+            var text = $( "#steam32Id1" ).val().trim();
             if(text.length > 0) {
                 $('.t1').each(function (i) {
                     this.disabled = false;
@@ -48,7 +53,7 @@ SearchTab = {
           });
 
        $( '#steam32Id2' ).change( function( event, ui ) {
-            var text = $( "#steam32Id2" ).val();
+            var text = $( "#steam32Id2" ).val().trim();
             if(text.length > 0) {
                 $('.t2').each(function (i) {
                     this.disabled = false;
@@ -62,7 +67,7 @@ SearchTab = {
           });
 
        $( '#steam32Id3' ).change( function( event, ui ) {
-            var text = $( "#steam32Id3" ).val();
+            var text = $( "#steam32Id3" ).val().trim();
             if(text.length > 0) {
                 $('.t3').each(function (i) {
                     this.disabled = false;
@@ -76,7 +81,7 @@ SearchTab = {
           });
 
        $( '#steam32Id4' ).change( function( event, ui ) {
-            var text = $( "#steam32Id4" ).val();
+            var text = $( "#steam32Id4" ).val().trim();
             if(text.length > 0) {
                 $('.t4').each(function (i) {
                     this.disabled = false;
@@ -92,8 +97,9 @@ SearchTab = {
     },
 
 
+
     getName: function(number) {
-        var name = $('#name'+number).val();
+        var name = $('#name'+number).val().trim();
 
         if(name.trim().length==0) {
             name = null;
@@ -104,17 +110,18 @@ SearchTab = {
     },
 
     getSteamId: function(number) {
-        var id = $('#steam32Id'+number).val();
+        var id = $('#steam32Id'+number).val().trim();
         if(id.length == 0) {
             id = null;
-            return id;
+        } else {
+            id = Number(id);
         }
 
-        return id.trim();
+        return id;
     },
 
     getMinGames: function() {
-        var mingames = $('#gamesplayed').val();
+        var mingames = Number($('#gamesplayed').val().trim());
 
         if(mingames % 1 != 0) {
             mingames = mingames - (mingames % 1);
@@ -124,7 +131,7 @@ SearchTab = {
     },
 
     getMinWinrate: function() {
-        var winrate = $('#winrate').val();
+        var winrate = Number($('#winrate').val().trim());
 
         if(winrate < 0) {
             winrate = 0;
@@ -141,9 +148,10 @@ SearchTab = {
         for(i = 0; i < x.length; i++) {
 
             if(x[i].checked == true) {
-                positions.push(i+1);
+                positions.push(x.getAttribute('data-enum'));
             }
         }
+
 
         if(positions.length == 0) {
             positions = null
@@ -153,7 +161,13 @@ SearchTab = {
     },
 
     getPatch: function() {
-        var patch = $('#patch').val();
+        var patch = $('#patch').val().trim();
+
+        if(patch == "null") {
+            patch = null;
+        } else {
+            patch = Number(patch);
+        }
 
         return patch;
     },
@@ -166,10 +180,39 @@ SearchTab = {
         var mingames = this.getMinGames();
         var poslist = this.getPositions();
 
+
         for(i = 1; i < 6; i++) {
-            var toSend = {steam32Id: this.getSteamId(i),patch:patch,heroType:poslist,minimumGamesPlayed:mingames,minimumWinRate:minwinrate};
-            console.log(toSend)
+
+            if($('#steam32Id'+i).val().trim().length > 0 ) {
+
+                var name = $('#name'+i).val().trim();
+
+                console.log("steam32Id"+i+" passed");
+                var toSend = {steam32Id: this.getSteamId(i),patch:patch,heroType:poslist,minimumGamesPlayed:mingames,minimumWinRate:minwinrate};
+                toSend = JSON.stringify(toSend);
+
+                console.log(toSend);
+
+                $.ajax({
+                  type: "POST",
+                  url: this.baseUrl + "/dotastat/playerstat",
+                  data: toSend,
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function(data, status, jqXHR) {
+                    console.log("name: " + name + "id: " + this.getSteamId(i) + "data: " + data);
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("text status: " + textStatus);
+                  }
+
+                });
+            }
         }
+
+        $("#tabs").tabs({
+            active: 1
+        });
 
     }
 }
