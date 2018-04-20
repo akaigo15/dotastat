@@ -10,6 +10,7 @@
     <script src="js/jquery/external/jquery/jquery.js"></script>
     <script src="js/jquery/jquery-ui.min.js"></script>
     <script src="js/searchtab.js"></script>
+    <script src="js/resultstab.js"></script>
     <script type="text/javascript" src="DataTables-1.10.16/datatables.min.js"></script>
 
 </head>
@@ -99,7 +100,11 @@
           ============================================================================= -->
 
     <div id="tabs-results">
+        <div id="resultsTableHolder">
 
+        </div>
+
+    </div>
     </div>
 
 </div>
@@ -114,6 +119,7 @@
 
         $("#tabs").tabs();
         SearchTab.startup(generatedURL);
+
     });
 </script>
 
