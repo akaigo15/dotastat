@@ -2,7 +2,7 @@ ResultsTab = {
 
     tableCount: 0,
 
-    buildTable: function(data) {
+    buildTable: function(data, name, id) {
 
         this.tableCount++;
 
@@ -16,9 +16,12 @@ ResultsTab = {
 
         var table = document.createElement("table");
         table.id = "table_"+this.tableCount;
+        table.className = "resultlist  center-text";
 
+        var div = document.createElement("div");
 
         var thead = document.createElement('thead');
+        var h3 = document.createElement('h3');
         var tr = document.createElement('tr');
 
         var th1 = document.createElement('td');
@@ -46,9 +49,21 @@ ResultsTab = {
 
         thead.appendChild(tr);
         table.appendChild(thead);
+        div.appendChild(table);
 
 
-        document.getElementById('resultsTableHolder').appendChild(table);
+        if(name.trim() != '') {
+            var titleText = document.createTextNode(name + " - " + id);
+        } else {
+            var titleText = document.createTextNode(id);
+        }
+
+
+        h3.appendChild(titleText);
+        div.prepend(h3);
+
+
+        document.getElementById('resultsTableHolder').prepend(div);
 
         $('#table_'+this.tableCount).DataTable({
             columns: [

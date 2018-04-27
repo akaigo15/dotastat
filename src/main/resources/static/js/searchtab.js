@@ -206,7 +206,7 @@ SearchTab = {
                   contentType: "application/json",
                   success: function(data, status, jqXHR) {
                     console.log("name: " + name + " id: " + id + " data: " + JSON.stringify(data));
-                    ResultsTab.buildTable(data);
+                    ResultsTab.buildTable(data, name, id);
                   },
                   error: function(jqXHR, textStatus, errorThrown) {
                     console.log("text status: " + textStatus);
