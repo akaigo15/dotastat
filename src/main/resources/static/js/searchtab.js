@@ -192,7 +192,7 @@ SearchTab = {
                 var name = $('#name'+i).val().trim();
 
                 console.log("steam32Id"+i+" passed");
-                var toSend = {"steam32Id": this.getSteamId(i),"patch":patch,"heroType":poslist,"minimumGamesPlayed":mingames,"minimumWinRate":minwinrate};
+                var toSend = {"steam32Id": this.getSteamId(i),"patch":patch,"heroType":poslist,"minimumGamesPlayed":mingames,"minimumWinRate":minwinrate, "name":name};
                 toSend = JSON.stringify(toSend);
 
                 console.log(toSend);
@@ -205,8 +205,8 @@ SearchTab = {
                   data: toSend,
                   contentType: "application/json",
                   success: function(data, status, jqXHR) {
-                    console.log("name: " + name + " id: " + id + " data: " + JSON.stringify(data));
-                    ResultsTab.buildTable(data, name, id);
+                    console.log(" data: " + JSON.stringify(data));
+                    ResultsTab.buildTable(data);
                   },
                   error: function(jqXHR, textStatus, errorThrown) {
                     console.log("text status: " + textStatus);

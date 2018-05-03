@@ -8,6 +8,7 @@ public class PlayerHeroParams {
   private List<String> heroType;
   private int minimumGamesPlayed;
   private double minimumWinRate;
+  private String name;
 
   public int getSteam32Id() {
     return steam32Id;
@@ -49,6 +50,14 @@ public class PlayerHeroParams {
     this.minimumWinRate = minimumWinRate;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   @Override
   public String toString() {
     return "PlayerHeroParams{" +
@@ -57,6 +66,7 @@ public class PlayerHeroParams {
         ", heroType=" + heroType +
         ", minimumGamesPlayed=" + minimumGamesPlayed +
         ", minimumWinRate=" + minimumWinRate +
+        ", name='" + name + '\'' +
         '}';
   }
 }

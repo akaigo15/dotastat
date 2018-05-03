@@ -36,4 +36,12 @@ public class Hero {
     return name;
   }
 
+  @Override
+  public String toString() {
+    return "Hero{" +
+        "role=" + role +
+        ", heroId=" + heroId +
+        ", name='" + name + '\'' +
+        '}';
+  }
 }

@@ -4,6 +4,7 @@ import net.akaigo15.dotastat.hero.Hero;
 import net.akaigo15.dotastat.logic.DotaStatService;
 import net.akaigo15.dotastat.logic.PlayerHeroStats;
 import net.akaigo15.dotastat.logic.TeamHeroStats;
+import net.akaigo15.dotastat.opendota.PlayerHeroInfo;
 import net.akaigo15.dotastat.opendota.TeamMatchInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,18 +29,26 @@ class DotaStatController {
   @RequestMapping(method = RequestMethod.POST,
   path = "/playerstat")
   @ResponseBody
-  public List<PlayerHeroStats> getPlayerHeroStats(@RequestBody PlayerHeroParams playerHeroParams) {
+  public PlayerHeroExportInfo getPlayerHeroStats(@RequestBody PlayerHeroParams playerHeroParams) {
       LOG.debug("getPlayerHeroStats called with: {}",playerHeroParams);
 
       List<Hero.Role> roleList = playerHeroParams.getHeroType().stream()
           .map(Hero.Role::valueOf)
           .collect(Collectors.toList());
 
-      return dotaStatService.filterPlayerHeroInfo(playerHeroParams.getSteam32Id(),
-          playerHeroParams.getPatch(),
-          roleList,
-          playerHeroParams.getMinimumGamesPlayed(),
-          playerHeroParams.getMinimumWinRate());
+
+
+
+     return new PlayerHeroExportInfo(playerHeroParams.getName(),
+         playerHeroParams.getSteam32Id(),
+         dotaStatService.filterPlayerHeroInfo
+             (playerHeroParams.getSteam32Id(),
+                 playerHeroParams.getPatch(),
+                 roleList,
+                 playerHeroParams.getMinimumGamesPlayed(),
+                 playerHeroParams.getMinimumWinRate())
+     );
+
   }
 
   @RequestMapping(method = RequestMethod.POST,

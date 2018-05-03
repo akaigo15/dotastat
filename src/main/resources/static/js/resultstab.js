@@ -2,15 +2,21 @@ ResultsTab = {
 
     tableCount: 0,
 
-    buildTable: function(data, name, id) {
+    buildTable: function(data) {
+
+        var name = data.name;
+        var id = data.id;
+        var dataArray = data.playerHeroStatsList
+
+
 
         this.tableCount++;
 
 
 
-        for(i = 0; i < data.length; i++) {
-            data[i].playerHeroInfo.winRate = (data[i].playerHeroInfo.win / data[i].playerHeroInfo.games).toFixed(2);
-            data[i].playerHeroInfo.winVsRate = (data[i].playerHeroInfo.against_win / data[i].playerHeroInfo.against_games).toFixed(2);
+        for(i = 0; i < data.playerHeroStatsList.length; i++) {
+            data.playerHeroStatsList[i].playerHeroInfo.winRate = (data.playerHeroStatsList[i].playerHeroInfo.win / data.playerHeroStatsList[i].playerHeroInfo.games).toFixed(2);
+            data.playerHeroStatsList[i].playerHeroInfo.winVsRate = (data.playerHeroStatsList[i].playerHeroInfo.against_win / data.playerHeroStatsList[i].playerHeroInfo.against_games).toFixed(2);
         }
 
 
@@ -52,10 +58,12 @@ ResultsTab = {
         div.appendChild(table);
 
 
+        var titleText = 'undefined';
+
         if(name.trim() != '') {
-            var titleText = document.createTextNode(name + " - " + id);
+            titleText = document.createTextNode(name + " - " + id);
         } else {
-            var titleText = document.createTextNode(id);
+            titleText = document.createTextNode(id);
         }
 
 
@@ -66,12 +74,13 @@ ResultsTab = {
         document.getElementById('resultsTableHolder').prepend(div);
 
         $('#table_'+this.tableCount).DataTable({
+            data: dataArray,
             columns: [
-            { data: "hero.name" },
-            { data: "playerHeroInfo.games"},
-            { data: 'playerHeroInfo.win'},
-            { data: 'playerHeroInfo.winRate'},
-            { data: 'playerHeroInfo.winVsRate'}
+                { data: "hero.name"},
+                { data: "playerHeroInfo.games"},
+                { data: 'playerHeroInfo.win'},
+                { data: 'playerHeroInfo.winRate'},
+                { data: 'playerHeroInfo.winVsRate'}
             ]
         });
 

@@ -44,13 +44,17 @@ public class DotaStatControllerTests {
 
     PlayerHeroParams playerHeroParams = new PlayerHeroParams();
     playerHeroParams.setHeroType(new ArrayList<>());
+    playerHeroParams.setName("name");
+    playerHeroParams.setSteam32Id(1234);
 
     Hero hero = new Hero(new ArrayList<Hero.Role>(),1,"name");
     PlayerHeroStats playerHeroStats = new PlayerHeroStats(new PlayerHeroInfo(), hero);
     List<PlayerHeroStats> list = new ArrayList<>();
     list.add(playerHeroStats);
 
-    String listAsJson = objectMapper.writeValueAsString(list);
+    PlayerHeroExportInfo export = new PlayerHeroExportInfo("name",1234,list);
+
+    String exportAsJson = objectMapper.writeValueAsString(export);
 
     when(dotaStatService.filterPlayerHeroInfo(Matchers.anyInt(),
         Matchers.anyInt(),
@@ -67,7 +71,7 @@ public class DotaStatControllerTests {
 
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-        .andExpect(content().json(listAsJson));
+        .andExpect(content().json(exportAsJson));
   }
 
   @Test
